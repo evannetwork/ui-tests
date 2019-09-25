@@ -121,10 +121,10 @@ When(/I log out from vue/, async () => {
 
   if (loggedIn) {
     loggedIn = false;
-
+    client.useCss();
     await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`)
-    await client.waitForElementPresent('#dropdown-profile', 10 * 1000)
-    await client.click('#dropdown-profile')
+    await client.waitForElementPresent('#evan-dapp-profile', 10 * 1000)
+    await client.click('#evan-dapp-profile')
     await client.waitForElementPresent(`#evan-logout`, 10 * 1000)
     await client.click('#evan-logout')
     await client.waitForElementPresent(`.modal-content #submit-logout`, 10 * 1000)

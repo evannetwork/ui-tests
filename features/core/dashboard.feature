@@ -30,7 +30,6 @@ Scenario: See working synchronization status
     And I click on button 'Success Dispatcher'
     Then I want to see the 'spinner' icon
   When I click on 'Synchronization' in main menu
-    Then I want to see a text including '0%'
     And I want to see a text including '25%'
     And I want to see a text including '50%'
     And I want to see a text including '75%'
