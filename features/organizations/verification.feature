@@ -1,7 +1,6 @@
 @CORE-238
 Feature: Organizations - Notary Verification
 
-@only
 Scenario: Requesting Notary Verification for current user
   Given I log in to evan.network using vue with organizationIdentification
     When I click on 'Profile' in main menu
