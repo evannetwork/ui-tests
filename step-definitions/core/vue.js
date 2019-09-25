@@ -15,15 +15,12 @@ const selectors = {
   vueUnlock: 'div.evan-steps.border-top.p-3 > div.pt-3.pb-3 > div > form > div.text-center > button',
 };
 
-Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
+Given(/^I log in to evan.network using vue with memonic "([^"]+)" and password "([^"]+)"/, async (mnemonic, password) => {
   const evan = setupEvan(client);
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
   await client.pause(5000);
-  if (customPart && !evan.accounts[accountName]) {
-    throw new Error(`no account data found for account ${accountName}`);
-  }
-  const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
+
 
   client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
@@ -35,20 +32,67 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   }, [], function(result) {
     this.assert.ok(result.value);
   });
+})
+
+
+Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
+  const evan = setupEvan(client);
+
+
+
+  await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
+  await client.execute(function() {
+    window.localStorage.setItem('evan-vault', '');
+    window.localStorage.setItem('evan-test-mode', true);
+    window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
+    window.localStorage.setItem('evan-language', 'en');
+    window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
+    return true;
+  })
+  await client.pause(3000);
+  if (customPart && !evan.accounts[accountName]) {
+    throw new Error(`no account data found for account ${accountName}`);
+  }
+  const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
 
   // vue, to define
-  await client.click(selectors.vueLogin1);
-  await client.waitForElementVisible(selectors.vueFreeInput, 10 * 1000);
-  await client.click(selectors.vueFreeInput);
-  await client.waitForElementVisible(selectors.vueRecoveryKey);
-  await client.setValue(selectors.vueRecoveryKey, [user.mnemonic]);
-  await client.waitForElementVisible(selectors.vueLogin2);
-  await client.click(selectors.vueLogin2);
-  await client.waitForElementVisible(selectors.vuePassword);
-  await client.setValue(selectors.vuePassword, [user.password]);
-  await client.pause(1000);
-  await client.click(selectors.vueUnlock);
+  // click on the "sign in" link
+  await client.waitForElementPresent(`a[href*="sign-in"]`, 10 * 1000);
+  await client.click(`a[href*="sign-in"]`)
+  await client.pause(2000);
+  // fill the mnemonic words
+  const splittedMnemnonic = user.mnemonic.split(' ');
+  let count = 0;
+  for(let value of splittedMnemnonic) {
+    await client.setValue(`#mnemonicInput${count}`, value);
+    count++;
+  }
+  client.useXpath();
+  // click on the next button
+  const nextBtnxPathSelector = `//*[contains(@class, 'btn') and normalize-space(text()) = "Next"]`;
+  await client.click(nextBtnxPathSelector);
+
+  // wait for profile loaded
   await client.pause(3000);
+
+  const fieldSelector = [
+    `//label[normalize-space(text()) = 'Password']/preceding-sibling::input`,
+    `//label[normalize-space(text()) = 'Password']/following-sibling::input`,
+    `//label/*[normalize-space(text()) = 'Password']/parent::*/preceding-sibling::input`,
+    `//label/*[normalize-space(text()) = 'Password']/parent::*/following-sibling::input`
+  ].join('|');
+
+
+  await client.expect.element(fieldSelector).to.be.visible;
+  await client.clearValue(fieldSelector),
+  await client.setValue(fieldSelector, user.password);
+
+  const unlockBtnxPathSelector = `//*[contains(@class, 'btn') and normalize-space(text()) = 'Unlock']`;
+  await client.expect.element(unlockBtnxPathSelector).to.be.present;
+  await client.click(unlockBtnxPathSelector);
+
+  await client.pause(3000);
+
   const hasContinue = await new Promise((resolve) => {
     client.elements('css selector', selectors.vueContinueNo, result => resolve(!!result.value.length) ); } );
   if (hasContinue) {
