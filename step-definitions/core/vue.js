@@ -57,7 +57,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
 
   // vue, to define
   // click on the "sign in" link
-  await client.waitForElementPresent(`a[href*="sign-in"]`, 10 * 1000);
+  await client.waitForElementPresent(`a[href*="sign-in"]`, 60 * 1000);
   await client.click(`a[href*="sign-in"]`)
   await client.pause(2000);
   // fill the mnemonic words
