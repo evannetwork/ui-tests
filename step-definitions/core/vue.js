@@ -34,11 +34,8 @@ Given("I log in to evan.network using vue with memonic {string} and password {st
   });
 })
 
-
 Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, accountName) => {
   const evan = setupEvan(client);
-
-
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
   await client.execute(function() {
@@ -53,7 +50,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   if (customPart && !evan.accounts[accountName]) {
     throw new Error(`no account data found for account ${accountName}`);
   }
-  const user = evan.accounts[accountName || 'default'] || evan.accounts.default;
+  const user = evan.accounts[accountName || 'default'];
 
   // vue, to define
   // click on the "sign in" link
