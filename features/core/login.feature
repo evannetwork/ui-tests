@@ -180,4 +180,4 @@ Scenario: Logging in to evan.network using vue with a not registered mnemnonic
     Then the button "Next" should be "enabled"
   When I click on button "Next"
     And I wait for 3 seconds
-    Then I want to see a text including "There is no evan.network Identity associated with this recovery key."
+    Then I want to see a text including "There is no evan.network identity associated with this recovery key."
