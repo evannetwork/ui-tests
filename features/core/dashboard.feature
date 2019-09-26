@@ -21,8 +21,6 @@ Scenario: Navigating through core DApps using the dashboard
   When I click on 'Help' in main menu
     Then I want to see a text including 'Wiki'
   When I click on 'Profile' in main menu
-    Then I want to see a text including 'Profile-Details'
-
     Then I want to see a text including 'Profile'
 
 Scenario: See working synchronization status
