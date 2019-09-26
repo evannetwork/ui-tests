@@ -133,6 +133,7 @@ When(/I log out from vue/, async () => {
 });
 
 Then(/I am no longer logged in to vue/, async () => {
+  client.useCss();
   await client.waitForElementPresent('a[href*="sign-in"]', 30 * 1000);
   await client.assert.visible('a[href*="sign-in"]');
 });
