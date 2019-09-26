@@ -18,3 +18,17 @@ matrix:
       - NIGHTWATCH_ENV=firefox
     script:
       - npm run test-testnet
+
+  - name: "edge"
+    node_js: "8.11.3"
+    env:
+      - NIGHTWATCH_ENV=edge
+    script:
+      - npm run test-testnet
+
+  - name: "safari"
+    node_js: "8.11.3"
+    env:
+      - NIGHTWATCH_ENV=safari
+    script:
+      - npm run test-testnet

@@ -32,9 +32,7 @@ if (localBrowser) {
     },
     desiredCapabilities: {
       'browserstack.user': process.env.BROWSERSTACK_USERNAME,
-      'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
-      os: 'Windows',
-      os_version: '10'
+      'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY
     },
     globals: {
       accounts,
@@ -69,6 +67,25 @@ const firefoxSettings = {
     marionette: false,
   }
 };
+
+const safariSettings = {
+  desiredCapabilities: {
+    browserName: 'safari',
+    javascriptEnabled: true,
+    acceptSslCerts: true,
+    marionette: false,
+  }
+};
+
+const edgeSettings = {
+  desiredCapabilities: {
+    browserName: 'edge',
+    javascriptEnabled: true,
+    acceptSslCerts: true,
+    marionette: false,
+  }
+};
+
 if (process.env.LOCAL_BROWSER_HEADLESS && JSON.parse(process.env.LOCAL_BROWSER_HEADLESS)) {
   chromeSettings.desiredCapabilities.chromeOptions.args.push('headless');
   firefoxSettings.desiredCapabilities.marionette = true;
@@ -78,5 +95,7 @@ module.exports = {
     default: defaultConfig,
     chrome: chromeSettings,
     firefox: firefoxSettings,
+    safari: safariSettings,
+    edge: edgeSettings
   },
 };
