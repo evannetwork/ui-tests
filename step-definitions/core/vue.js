@@ -133,8 +133,8 @@ When(/I log out from vue/, async () => {
 });
 
 Then(/I am no longer logged in to vue/, async () => {
-  await client.waitForElementPresent('#sign-in', 30 * 1000);
-  await client.assert.visible('#sign-in');
+  await client.waitForElementPresent('a[href*="sign-in"]', 30 * 1000);
+  await client.assert.visible('a[href*="sign-in"]');
 });
 
 When(/I switch to vue/, async () => {
