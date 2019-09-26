@@ -15,7 +15,7 @@ const selectors = {
   vueUnlock: 'div.evan-steps.border-top.p-3 > div.pt-3.pb-3 > div > form > div.text-center > button',
 };
 
-Given(/^I log in to evan.network using vue with memonic "([^"]+)" and password "([^"]+)"/, async (mnemonic, password) => {
+Given("I log in to evan.network using vue with memonic {string} and password {string}", async (mnemonic, password) => {
   const evan = setupEvan(client);
 
   await client.url(`${ evan.baseUrl }#/dashboard.vue.evan`);
