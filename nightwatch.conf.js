@@ -71,6 +71,7 @@ const firefoxSettings = {
 const safariSettings = {
   desiredCapabilities: {
     browserName: 'safari',
+    browser_version: '12.1',
     javascriptEnabled: true,
     acceptSslCerts: true,
     marionette: false,
