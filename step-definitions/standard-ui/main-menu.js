@@ -22,6 +22,8 @@ When('I click on {string} in main menu',
     } else {
       const selector = mainMenu[entry];
 
+      await client.useCss();
+
       // ensure that the element is present
       await client.expect.element(selector).to.be.present;
 

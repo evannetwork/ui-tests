@@ -46,7 +46,7 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
     window.localStorage.setItem('evan-test-recaptchaId', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
     return true;
   })
-  await client.waitForElementPresent('a[href*="sign-in"]', 60 * 1000);
+
   if (customPart && !evan.accounts[accountName]) {
     throw new Error(`no account data found for account ${accountName}`);
   }
@@ -55,6 +55,8 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   // vue, to define
   // click on the "sign in" link
   await client.waitForElementPresent(`a[href*="sign-in"]`, 60 * 1000);
+  // need to wait because the link is initally overlayed
+  await client.pause(500);
   await client.click(`a[href*="sign-in"]`)
   await client.waitForElementPresent(`#mnemonicInput0`, 5 * 1000);
   // fill the mnemonic words

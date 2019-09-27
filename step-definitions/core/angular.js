@@ -18,6 +18,7 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
   await client.execute(function() {
     window.localStorage.setItem('evan-vault', '');
     window.localStorage.setItem('evan-test-mode', true);
+    window.localStorage.setItem('evan-language', 'en');
     window.localStorage.setItem('evan-warnings-disabled', '{"payment-channel":true}');
     return true;
   }, [], function(result) {
@@ -68,4 +69,3 @@ Then(/^I am no longer logged in to angular$/, async () => {
   await client.waitForElementPresent('onboarding-root', 30 * 1000);
   await client.assert.visible('onboarding-root');
 });
- 
