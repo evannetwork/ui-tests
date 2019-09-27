@@ -32,7 +32,8 @@ if (localBrowser) {
     },
     desiredCapabilities: {
       'browserstack.user': process.env.BROWSERSTACK_USERNAME,
-      'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY
+      'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
+      'browserstack.video': false
     },
     globals: {
       accounts,
