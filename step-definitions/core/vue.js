@@ -71,9 +71,6 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
   const nextBtnxPathSelector = `//*[contains(@class, 'btn') and normalize-space(text()) = "Next"]`;
   await client.click(nextBtnxPathSelector);
 
-  // wait for profile loaded
-  await client.pause(3000);
-
   const fieldSelector = [
     `//label[normalize-space(text()) = 'Password']/preceding-sibling::input`,
     `//label[normalize-space(text()) = 'Password']/following-sibling::input`,
@@ -81,13 +78,12 @@ Given(/^I log in to evan.network using vue( with )?(\w+)?$/, async (customPart, 
     `//label/*[normalize-space(text()) = 'Password']/parent::*/following-sibling::input`
   ].join('|');
 
-
-  await client.expect.element(fieldSelector).to.be.visible;
+  await client.waitForElementPresent(fieldSelector, 60 * 1000);
   await client.clearValue(fieldSelector),
   await client.setValue(fieldSelector, user.password);
 
   const unlockBtnxPathSelector = `//*[contains(@class, 'btn') and normalize-space(text()) = 'Unlock']`;
-  await client.expect.element(unlockBtnxPathSelector).to.be.present;
+  await client.waitForElementPresent(unlockBtnxPathSelector, 60 * 1000);
   await client.click(unlockBtnxPathSelector);
 
   await client.pause(3000);
