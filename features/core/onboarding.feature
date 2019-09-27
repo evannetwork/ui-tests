@@ -11,7 +11,7 @@ Scenario: Registering a new account on evan Happy Path
   Then I click on button "Continue"
   Then I click the element with id "termsAccepted"
   Then I click the element with id "evan-recaptcha"
-  Then I wait for 3 seconds
+  Then I wait for 5 seconds
   Then the button "Create Account" should be "enabled"
 
 Scenario: Registering a new account not set alias
