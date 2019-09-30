@@ -31,9 +31,15 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
     .execute(function() {
       window.localStorage['bc-dev-logs'] = 'debug';
       window.localStorage['angular-dev-logs'] = 'debug';
-    }, [], function(result) {})
-    .keys([client.Keys.CONTROL, '0'])
-    .waitForElementPresent('onboarding-welcome', 60 * 1000)
+    }, [], function(result) {});
+
+  // edge stuff because zoom level is initally adjusted
+  if (client.options.desiredCapabilities.browserName === 'edge') {
+    await client.keys([client.Keys.CONTROL, '0']);
+  }
+
+
+  await client.waitForElementPresent('onboarding-welcome', 60 * 1000)
     .assert.elementPresent('.slide-zoom > h3')
     .pause(3 * 1000)
     .click('.start-buttons > button:nth-child(2)')
