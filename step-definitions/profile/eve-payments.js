@@ -19,7 +19,7 @@ When('I select the country {string}', async (country) => {
 
   await client.waitForElementPresent('//h2[normalize-space(text()) = \'Country *\']', 20e3);
   client.pause(1e3);
-  
+
   const selectedCountry = `//button[@ion-button='alert-radio-button']/*/*[normalize-space(text()) = '${country}']/parent::*/parent::*`;
   const radioButton = await client.element('xpath', selectedCountry);
 
@@ -34,7 +34,7 @@ When('I select the country {string}', async (country) => {
 
   client.pause(1e3);
   await client.click(selectedCountry);
-  
+
   const okButton = '//button[@ion-button=\'alert-button\']/*[normalize-space(text()) = \'OK\']/parent::*';
   await client.click(okButton);
 
@@ -43,23 +43,25 @@ When('I select the country {string}', async (country) => {
 
 When('I enter the credit card {string}, valid util {string} with the CVC {string}',
 async (card, validUntil, cvc) => {
-  // switch to stripe iframe
-  await client.frame(0)
+  if (browser.options.desiredCapabilities.browserName === 'firefox') {
+    // switch to stripe iframe
+    await client.frame(0)
 
-  // set value set focus on input
-  await client.setValue('input[name="cardnumber"]', '')
-  await client.setValue('input[name="cardnumber"]', '')
-  await client.setValue('input[name="cardnumber"]', '')
+    // set value set focus on input
+    await client.setValue('input[name="cardnumber"]', '')
+    await client.setValue('input[name="cardnumber"]', '')
+    await client.setValue('input[name="cardnumber"]', '')
 
-  // type values
-  await [...[card, validUntil, cvc].join('')].reduce(async (chain, element) => {
-    await chain;
-    await client.pause(100);
-    await client.keys(element);
-  }, Promise.resolve());
+    // type values
+    await [...[card, validUntil, cvc].join('')].reduce(async (chain, element) => {
+      await chain;
+      await client.pause(100);
+      await client.keys(element);
+    }, Promise.resolve());
 
-  // switch back to top context
-  await client.frame(null)
+    // switch back to top context
+    await client.frame(null)
+  }
 });
 
 When('I click on the buy button', async () => {
