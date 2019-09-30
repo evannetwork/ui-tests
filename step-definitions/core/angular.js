@@ -38,7 +38,7 @@ Given(/^I log in to evan.network using angular( with )?(\w+)?$/, async (customPa
     .pause(3 * 1000)
     .click('.start-buttons > button:nth-child(2)')
     .waitForElementVisible('mnemonic-display', 10 * 1000)
-    .click('mnemonic-display ion-toggle button')
+    .click('mnemonic-display ion-toggle')
     .click('.direct-input ion-textarea > textarea')
     .setValue('.direct-input ion-textarea > textarea', [user.mnemonic])
     .keys([client.Keys.ENTER])
