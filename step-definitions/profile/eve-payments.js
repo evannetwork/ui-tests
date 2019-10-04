@@ -43,9 +43,14 @@ When('I select the country {string}', async (country) => {
 
 When('I enter the credit card {string}, valid util {string} with the CVC {string}',
 async (card, validUntil, cvc) => {
-  if (client.options.desiredCapabilities.browserName === 'firefox') {
+  if (client.options.desiredCapabilities.browserName !== 'firefox') {
+
     // switch to stripe iframe
     await client.frame(0)
+
+
+
+
 
     // set value set focus on input
     await client.setValue('input[name="cardnumber"]', '')

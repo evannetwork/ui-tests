@@ -49,6 +49,7 @@ defaultConfig.globals.baseUrl = process.env.NIGHTWATCH_URL || 'https://dashboard
 const chromeSettings = {
   desiredCapabilities: {
     browserName: 'chrome',
+    browser_version: '66',
     javascriptEnabled: true,
     acceptSslCerts: true,
     chromeOptions: {
