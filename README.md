@@ -1,4 +1,7 @@
 # evan.network UI tests
+
+*This project is archived / readonly and was migrated to the [ui-dapps](https://github.com/evannetwork/ui-dapps) project.*
+
 [Nightwatch](http://nightwatchjs.org/) Integration with BrowserStack.
 
 ![BrowserStack Logo](https://d98b8t1nnulk5.cloudfront.net/production/images/layout/logo-header.png?1469004780)
